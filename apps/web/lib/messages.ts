@@ -1,0 +1,63 @@
+// Bulgarian UI strings — i18n-ready, all user-facing text lives here
+
+export const messages = {
+  auth: {
+    login: 'Вход',
+    register: 'Регистрация',
+    logout: 'Изход',
+    email: 'Имейл',
+    password: 'Парола',
+    name: 'Име',
+    loginBtn: 'Влез',
+    registerBtn: 'Регистрирай се',
+    noAccount: 'Нямаш акаунт?',
+    hasAccount: 'Вече имаш акаунт?',
+    invalidCredentials: 'Невалиден имейл или парола.',
+    emailTaken: 'Имейлът вече е зает.',
+  },
+  nav: {
+    dashboard: 'Днес',
+    meals: 'Ястия',
+    profile: 'Профил',
+    admin: 'Админ',
+  },
+  dashboard: {
+    title: 'Днешен план',
+    noMeals: 'Няма планирани ястия за днес.',
+    addMeal: 'Добави ястие',
+    markEaten: 'Маркирай като изядено',
+    markSkipped: 'Пропусни',
+    eaten: 'Изядено',
+    skipped: 'Пропуснато',
+    planned: 'Планирано',
+  },
+  meals: {
+    title: 'Моите ястия',
+    add: 'Добави ястие',
+    edit: 'Редактирай',
+    delete: 'Изтрий',
+    name: 'Наименование',
+    description: 'Описание',
+    calories: 'Калории',
+    caloriesUnit: 'ккал',
+    confirmDelete: 'Сигурен ли си, че искаш да изтриеш това ястие?',
+    noMeals: 'Нямаш добавени ястия.',
+  },
+  profile: {
+    title: 'Профил',
+    deleteAccount: 'Изтрий акаунт',
+    deleteConfirm: 'Въведи паролата си за потвърждение',
+    deleteWarning: 'Това действие е необратимо. Всички твои данни ще бъдат изтрити.',
+  },
+  admin: {
+    title: 'Администрация',
+    users: 'Потребители',
+    deleteUser: 'Изтрий потребител',
+  },
+  errors: {
+    generic: 'Нещо се обърка. Моля, опитай отново.',
+    notFound: 'Страницата не е намерена.',
+    unauthorized: 'Нямаш достъп до тази страница.',
+    forbidden: 'Забранен достъп.',
+  },
+} as const;
