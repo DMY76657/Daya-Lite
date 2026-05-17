@@ -28,3 +28,18 @@ Course scope excludes email service (Resend). Password confirmation is simpler a
 ### Bulgarian UI text centralized in `lib/messages.ts`
 All user-facing strings in one file makes future i18n straightforward.
 Architecture is i18n-ready even though real translation is out of MVP scope.
+
+### Next.js 15 (not 14)
+Course says "14+". Next.js 15 brings async `cookies()` / `headers()` APIs and native `next.config.ts` support
+which we use. React 18.3 is kept (Next 15 supports both 18 and 19).
+
+### Schema-only `packages/shared` (no DB client)
+The shared package exports tables + types only. Each app constructs its own Drizzle client (web in
+`apps/web/lib/db.ts`). Avoids two Drizzle instances and keeps `@neondatabase/serverless` out of mobile.
+
+### UNIQUE index on `daily_plans(user_id, plan_date)`
+One plan per user per day. Enforced at DB level via `uniqueIndex` in Drizzle schema.
+
+### Mobile `metro.config.js` for monorepo
+Expo's Metro bundler needs explicit `watchFolders` + `nodeModulesPaths` to resolve workspace packages
+like `@daya-lite/shared` from `packages/shared`. Standard Expo monorepo pattern.

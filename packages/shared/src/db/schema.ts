@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, integer, timestamp, date } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, integer, timestamp, date, uniqueIndex } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -20,16 +20,22 @@ export const meals = pgTable('meals', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
-export const dailyPlans = pgTable('daily_plans', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id')
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
-  planDate: date('plan_date').notNull(),
-  notes: text('notes'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-});
+export const dailyPlans = pgTable(
+  'daily_plans',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    planDate: date('plan_date').notNull(),
+    notes: text('notes'),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex('daily_plans_user_date_idx').on(table.userId, table.planDate),
+  ],
+);
 
 export const mealLogs = pgTable('meal_logs', {
   id: uuid('id').primaryKey().defaultRandom(),
