@@ -1,8 +1,9 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 import type { JwtPayload } from '@daya-lite/shared';
 
-const COOKIE_NAME = 'daya_token';
+export const COOKIE_NAME = 'daya_token';
 const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
 export async function signToken(payload: Omit<JwtPayload, 'iat' | 'exp'>): Promise<string> {
