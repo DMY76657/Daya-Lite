@@ -1,4 +1,5 @@
-// TODO: implement register form — Day 2 (May 18-19)
+import { RegisterForm } from '@/components/RegisterForm';
+
 export default function RegisterPage() {
-  return <main><h1>Регистрация</h1></main>;
+  return <RegisterForm />;
 }

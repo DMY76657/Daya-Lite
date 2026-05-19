@@ -1,4 +1,5 @@
-// TODO: implement login form — Day 2 (May 18-19)
+import { LoginForm } from '@/components/LoginForm';
+
 export default function LoginPage() {
-  return <main><h1>Вход</h1></main>;
+  return <LoginForm />;
 }
