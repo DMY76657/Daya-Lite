@@ -17,7 +17,7 @@ export async function signToken(payload: Omit<JwtPayload, 'iat' | 'exp'>): Promi
 export async function verifyToken(token: string): Promise<JwtPayload | null> {
   try {
     const { payload } = await jwtVerify(token, secret);
-    return payload as JwtPayload;
+    return payload as unknown as JwtPayload;
   } catch {
     return null;
   }
@@ -30,13 +30,31 @@ export async function getSession(): Promise<JwtPayload | null> {
   return verifyToken(token);
 }
 
-export function cookieOptions() {
+export function sessionCookie(value: string, maxAge = 60 * 60 * 24 * 7) {
   return {
     name: COOKIE_NAME,
+    value,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax' as const,
     path: '/',
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    maxAge,
   };
+}
+
+export async function requireUser(): Promise<JwtPayload | NextResponse> {
+  const session = await getSession();
+  if (!session) {
+    return NextResponse.json({ error: 'Не сте удостоверен.' }, { status: 401 });
+  }
+  return session;
+}
+
+export async function requireAdmin(): Promise<JwtPayload | NextResponse> {
+  const result = await requireUser();
+  if (result instanceof NextResponse) return result;
+  if (result.role !== 'admin') {
+    return NextResponse.json({ error: 'Забранен достъп.' }, { status: 403 });
+  }
+  return result;
 }
