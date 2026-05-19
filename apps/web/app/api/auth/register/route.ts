@@ -30,7 +30,8 @@ export async function POST(request: Request) {
 
   const token = await signToken({ sub: user.id, email: user.email, role: user.role });
 
-  const response = NextResponse.json({ data: user }, { status: 201 });
+  // token is included in body for mobile clients (Bearer auth); web ignores it (uses cookie)
+  const response = NextResponse.json({ data: { user, token } }, { status: 201 });
   response.cookies.set(sessionCookie(token));
   return response;
 }

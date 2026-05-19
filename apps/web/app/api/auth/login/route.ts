@@ -29,7 +29,10 @@ export async function POST(request: Request) {
   const token = await signToken({ sub: user.id, email: user.email, role: user.role });
 
   const response = NextResponse.json({
-    data: { id: user.id, email: user.email, name: user.name, role: user.role },
+    data: {
+      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      token,
+    },
   });
   response.cookies.set(sessionCookie(token));
   return response;

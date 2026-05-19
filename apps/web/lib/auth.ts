@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify } from 'jose';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { JwtPayload } from '@daya-lite/shared';
 
@@ -24,6 +24,16 @@ export async function verifyToken(token: string): Promise<JwtPayload | null> {
 }
 
 export async function getSession(): Promise<JwtPayload | null> {
+  // Mobile clients use Authorization: Bearer <token>
+  const headersList = await headers();
+  const authHeader = headersList.get('authorization');
+  if (authHeader?.toLowerCase().startsWith('bearer ')) {
+    const token = authHeader.slice(7).trim();
+    const payload = await verifyToken(token);
+    if (payload) return payload;
+  }
+
+  // Web clients use httpOnly cookie
   const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
   if (!token) return null;
