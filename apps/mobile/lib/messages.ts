@@ -1,0 +1,38 @@
+export const messages = {
+  appName: 'Daya Lite',
+  auth: {
+    title: 'Вход',
+    email: 'Имейл',
+    password: 'Парола',
+    loginBtn: 'Влез',
+    logout: 'Изход',
+    loading: 'Зареждане...',
+  },
+  today: {
+    title: 'Днешен план',
+    addMeal: 'Добави ястие',
+    noMeals: 'Няма планирани ястия за днес.',
+    noCatalog: 'Първо добави ястие в каталога.',
+    markEaten: 'Изядено',
+    eaten: 'Изядено',
+    skipped: 'Пропуснато',
+    planned: 'Планирано',
+    refresh: 'Обнови',
+  },
+  addMeal: {
+    title: 'Ново ястие',
+    name: 'Наименование',
+    namePlaceholder: 'напр. Гръцка салата',
+    description: 'Описание (незадължително)',
+    calories: 'Калории (незадължително)',
+    time: 'Час за днешния план (HH:MM, незадължително)',
+    addToToday: 'Добави към днешния план',
+    submit: 'Запази',
+    back: 'Назад',
+  },
+  errors: {
+    generic: 'Нещо се обърка. Моля, опитай отново.',
+    network: 'Няма връзка със сървъра.',
+    timeFormat: 'Часът трябва да е във формат HH:MM.',
+  },
+} as const;
