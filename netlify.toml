@@ -1,0 +1,20 @@
+# Netlify configuration for the Daya Lite Next.js web app.
+# The Expo mobile app is not deployed here; it connects to the URL this
+# deployment produces (see apps/mobile/.env -> EXPO_PUBLIC_API_BASE_URL).
+
+[build]
+  command = "npm run build:web"
+  publish = "apps/web/.next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # The repo's .npmrc already sets legacy-peer-deps for the Expo workspace,
+  # but Netlify's CI sometimes needs it as an env var too.
+  NPM_FLAGS = "--legacy-peer-deps"
+  # Tell Next.js it is the active workspace (monorepo signal).
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Official Netlify plugin for Next.js — handles SSR, ISR, image optimisation,
+# and rewrites the App Router routes to Netlify Functions automatically.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
