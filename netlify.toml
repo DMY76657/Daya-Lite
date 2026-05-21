@@ -18,6 +18,7 @@
   # Tell Next.js it is the active workspace (monorepo signal).
   NEXT_TELEMETRY_DISABLED = "1"
 
-# Netlify auto-detects Next.js and loads its managed Next.js Runtime; do not
-# pin @netlify/plugin-nextjs in netlify.toml — that pins an old npm copy and
-# the build log explicitly warns to use the directory plugin instead.
+# Required for App Router + middleware support on Netlify. Without this the
+# runtime doesn't wire Next.js routes to Netlify Functions and every path 404s.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
