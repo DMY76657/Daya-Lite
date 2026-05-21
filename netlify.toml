@@ -3,6 +3,10 @@
 # deployment produces (see apps/mobile/.env -> EXPO_PUBLIC_API_BASE_URL).
 
 [build]
+  # Build from the repo root (npm workspaces install both apps from here).
+  # Netlify's initial Expo auto-detection had set this to apps/mobile — explicit
+  # value here overrides any UI-set base directory.
+  base = "/"
   command = "npm run build:web"
   publish = "apps/web/.next"
 
