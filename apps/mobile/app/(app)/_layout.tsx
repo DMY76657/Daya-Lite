@@ -11,6 +11,7 @@ export default function AppLayout() {
     >
       <Stack.Screen name="index" options={{ title: 'Daya Lite' }} />
       <Stack.Screen name="add-meal" options={{ title: 'Ново ястие', presentation: 'modal' }} />
+      <Stack.Screen name="profile" options={{ title: 'Профил' }} />
     </Stack>
   );
 }

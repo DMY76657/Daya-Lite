@@ -11,7 +11,6 @@ import {
 import { Stack, useFocusEffect, useRouter } from 'expo-router';
 import type { Meal, MealLog } from '@daya-lite/shared';
 import { api, ApiError } from '../../lib/api';
-import { tokenStorage } from '../../lib/storage';
 import { messages } from '../../lib/messages';
 
 type LogWithMeal = MealLog & { meal: Meal };
@@ -84,19 +83,17 @@ export default function TodayScreen() {
     }
   }
 
-  async function logout() {
-    await tokenStorage.clear();
-    router.replace('/(auth)/login');
-  }
-
   return (
     <>
       <Stack.Screen
         options={{
           title: messages.today.title,
           headerRight: () => (
-            <TouchableOpacity onPress={logout} style={styles.headerBtn}>
-              <Text style={styles.headerBtnText}>{messages.auth.logout}</Text>
+            <TouchableOpacity
+              onPress={() => router.push('/(app)/profile')}
+              style={styles.headerBtn}
+            >
+              <Text style={styles.headerBtnText}>{messages.profile.title}</Text>
             </TouchableOpacity>
           ),
         }}
