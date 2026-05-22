@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { api, ApiError } from '../../lib/api';
-import { tokenStorage } from '../../lib/storage';
+import { tokenStorage, userStorage, type StoredUser } from '../../lib/storage';
 import { messages } from '../../lib/messages';
 
 interface LoginResponse {
-  user: { id: string; email: string; name: string; role: 'user' | 'admin' };
+  user: StoredUser;
   token: string;
 }
 
@@ -35,6 +35,7 @@ export default function LoginScreen() {
         auth: false,
       });
       await tokenStorage.set(data.token);
+      await userStorage.set(data.user);
       router.replace('/(app)');
     } catch (err) {
       setError(err instanceof ApiError ? err.message : messages.errors.network);
@@ -85,6 +86,13 @@ export default function LoginScreen() {
             {loading ? messages.auth.loading : messages.auth.loginBtn}
           </Text>
         </TouchableOpacity>
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>{messages.auth.noAccount} </Text>
+          <Link href="/(auth)/register" replace style={styles.link}>
+            {messages.auth.registerBtn}
+          </Link>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
@@ -158,4 +166,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
   },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 18,
+  },
+  footerText: { color: '#64748b', fontSize: 14 },
+  link: { color: '#047857', fontWeight: '600', fontSize: 14 },
 });

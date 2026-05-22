@@ -2,6 +2,14 @@ import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 
 const TOKEN_KEY = 'daya_token';
+const USER_KEY = 'daya_user';
+
+export interface StoredUser {
+  id: string;
+  email: string;
+  name: string;
+  role: 'user' | 'admin';
+}
 
 // SecureStore is not implemented on Web; fall back to localStorage there.
 async function setItem(key: string, value: string) {
@@ -32,3 +40,21 @@ export const tokenStorage = {
   set: (value: string) => setItem(TOKEN_KEY, value),
   clear: () => removeItem(TOKEN_KEY),
 };
+
+export const userStorage = {
+  async get(): Promise<StoredUser | null> {
+    const raw = await getItem(USER_KEY);
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw) as StoredUser;
+    } catch {
+      return null;
+    }
+  },
+  set: (user: StoredUser) => setItem(USER_KEY, JSON.stringify(user)),
+  clear: () => removeItem(USER_KEY),
+};
+
+export async function clearSession() {
+  await Promise.all([removeItem(TOKEN_KEY), removeItem(USER_KEY)]);
+}
