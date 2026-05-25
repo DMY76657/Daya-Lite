@@ -10,9 +10,17 @@ config({ path: '.env' });
 
 const sql = neon(process.env.DATABASE_URL);
 
-const ADMIN_EMAIL = 'admin@daya.bg';
-const USER_EMAIL = 'user@daya.bg';
-const PASSWORD = 'demo123';
+const ADMIN_EMAIL = process.env.SEED_ADMIN_EMAIL ?? 'admin@daya.bg';
+const USER_EMAIL = process.env.SEED_USER_EMAIL ?? 'user@daya.bg';
+const PASSWORD = process.env.SEED_PASSWORD;
+
+if (!PASSWORD) {
+  console.error(
+    'SEED_PASSWORD env var is required. Add it to .env (kept out of git).\n' +
+    'Pick any value — this is the password the seeded demo accounts will use.',
+  );
+  process.exit(1);
+}
 
 async function upsertUser(email, name, role) {
   const passwordHash = await bcrypt.hash(PASSWORD, 10);

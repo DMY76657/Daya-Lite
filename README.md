@@ -14,12 +14,12 @@ A multi-platform full-stack app (Next.js + Expo + Neon Postgres) where a user ca
 
 ## Demo credentials
 
-| Role | Email | Password |
-|---|---|---|
-| User | `user@daya.bg` | `demo123` |
-| Admin | `admin@daya.bg` | `demo123` |
+Sample accounts are seeded by `npm run db:seed`. The exact credentials are
+provided privately to the grading team alongside the capstone submission —
+they are intentionally not published here so casual visitors cannot log in
+with elevated (admin) privileges on the live site.
 
-Created by `npm run db:seed`. Register a new account from `/register` if seeded users are missing.
+You can always register a fresh account at `/register` to explore the app.
 
 ## Tech stack
 
@@ -158,7 +158,7 @@ EXPO_PUBLIC_API_BASE_URL=https://daya-lite.netlify.app/api
 ```bash
 npm run db:push          # sync schema with Neon
 npm run db:seed          # 2 demo users + sample meals
-npm run db:seed:bulk     # 10k meals on user@daya.bg (scalability test)
+npm run db:seed:bulk     # 10k meals on the seeded regular user (scalability test)
 npm run db:studio        # browse data
 ```
 

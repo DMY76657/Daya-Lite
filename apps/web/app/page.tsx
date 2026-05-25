@@ -172,17 +172,6 @@ export default function HomePage() {
               Имам акаунт
             </Link>
           </div>
-          <p className="mt-5 text-sm text-slate-500">
-            Демо акаунт:{' '}
-            <code className="rounded bg-slate-900 px-2 py-0.5 text-xs font-medium text-emerald-300">
-              user@daya.bg
-            </code>{' '}
-            /{' '}
-            <code className="rounded bg-slate-900 px-2 py-0.5 text-xs font-medium text-emerald-300">
-              demo123
-            </code>
-          </p>
-
           {/* Stats strip */}
           <dl
             className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4"
