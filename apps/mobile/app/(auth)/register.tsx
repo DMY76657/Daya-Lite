@@ -42,7 +42,11 @@ export default function RegisterScreen() {
       });
       await tokenStorage.set(data.token);
       await userStorage.set(data.user);
-      router.replace('/(app)');
+      if (Platform.OS === 'web') {
+        window.location.href = '/';
+      } else {
+        router.replace('/(app)');
+      }
     } catch (err) {
       setError(err instanceof ApiError ? err.message : messages.errors.network);
     } finally {

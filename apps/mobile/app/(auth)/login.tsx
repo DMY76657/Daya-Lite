@@ -36,7 +36,14 @@ export default function LoginScreen() {
       });
       await tokenStorage.set(data.token);
       await userStorage.set(data.user);
-      router.replace('/(app)');
+      if (Platform.OS === 'web') {
+        // Root layout checks the token only on mount, so on web we force
+        // a full reload to re-run that check. Native uses expo-router's
+        // in-memory state and re-navigates correctly.
+        window.location.href = '/';
+      } else {
+        router.replace('/(app)');
+      }
     } catch (err) {
       setError(err instanceof ApiError ? err.message : messages.errors.network);
     } finally {
