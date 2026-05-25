@@ -20,7 +20,7 @@ export async function GET(_: Request, { params }: Params) {
     .limit(1);
 
   if (!plan) {
-    return NextResponse.json({ data: null });
+    return jsonResponse({ data: null });
   }
 
   const rows = await db
@@ -33,7 +33,7 @@ export async function GET(_: Request, { params }: Params) {
     .where(eq(mealLogs.planId, plan.id))
     .orderBy(asc(mealLogs.scheduledTime));
 
-  return NextResponse.json({
+  return jsonResponse({
     data: {
       ...plan,
       logs: rows.map((r) => ({ ...r.log, meal: r.meal })),
@@ -60,10 +60,11 @@ export async function PUT(request: Request, { params }: Params) {
     .returning();
 
   if (!updated) {
-    return NextResponse.json({ error: 'Планът не е намерен.' }, { status: 404 });
+    return jsonResponse({ error: 'Планът не е намерен.' }, { status: 404 });
   }
 
-  return NextResponse.json({ data: updated });
+  return jsonResponse({ data: updated });
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

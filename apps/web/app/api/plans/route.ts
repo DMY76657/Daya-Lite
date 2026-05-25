@@ -15,7 +15,7 @@ export async function GET() {
     .where(eq(dailyPlans.userId, session.sub))
     .orderBy(desc(dailyPlans.planDate));
 
-  return NextResponse.json({ data: rows });
+  return jsonResponse({ data: rows });
 }
 
 export async function POST(request: Request) {
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const validation = validatePlan(body);
   if (!validation.success) {
-    return NextResponse.json({ error: validation.errors!.join(' ') }, { status: 400 });
+    return jsonResponse({ error: validation.errors!.join(' ') }, { status: 400 });
   }
 
   const { planDate, notes } = validation.data!;
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     .limit(1);
 
   if (existing.length > 0) {
-    return NextResponse.json(
+    return jsonResponse(
       { error: 'Вече има план за тази дата.' },
       { status: 409 },
     );
@@ -48,7 +48,8 @@ export async function POST(request: Request) {
     .values({ userId: session.sub, planDate, notes })
     .returning();
 
-  return NextResponse.json({ data: plan }, { status: 201 });
+  return jsonResponse({ data: plan }, { status: 201 });
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

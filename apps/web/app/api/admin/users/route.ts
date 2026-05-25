@@ -19,7 +19,8 @@ export async function GET() {
     .from(users)
     .orderBy(desc(users.createdAt));
 
-  return NextResponse.json({ data: rows });
+  return jsonResponse({ data: rows });
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

@@ -24,10 +24,10 @@ export async function GET(_: Request, { params }: Params) {
     .limit(1);
 
   if (!user) {
-    return NextResponse.json({ error: 'Потребителят не е намерен.' }, { status: 404 });
+    return jsonResponse({ error: 'Потребителят не е намерен.' }, { status: 404 });
   }
 
-  return NextResponse.json({ data: user });
+  return jsonResponse({ data: user });
 }
 
 export async function DELETE(_: Request, { params }: Params) {
@@ -37,7 +37,7 @@ export async function DELETE(_: Request, { params }: Params) {
   const { id } = await params;
 
   if (id === session.sub) {
-    return NextResponse.json(
+    return jsonResponse(
       { error: 'Не можеш да изтриеш собствения си админ акаунт от тук.' },
       { status: 400 },
     );
@@ -49,10 +49,11 @@ export async function DELETE(_: Request, { params }: Params) {
     .returning({ id: users.id });
 
   if (!deleted) {
-    return NextResponse.json({ error: 'Потребителят не е намерен.' }, { status: 404 });
+    return jsonResponse({ error: 'Потребителят не е намерен.' }, { status: 404 });
   }
 
-  return NextResponse.json({ data: { id: deleted.id } });
+  return jsonResponse({ data: { id: deleted.id } });
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

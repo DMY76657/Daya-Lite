@@ -19,10 +19,10 @@ export async function GET(_: Request, { params }: Params) {
     .limit(1);
 
   if (!meal) {
-    return NextResponse.json({ error: 'Ястието не е намерено.' }, { status: 404 });
+    return jsonResponse({ error: 'Ястието не е намерено.' }, { status: 404 });
   }
 
-  return NextResponse.json({ data: meal });
+  return jsonResponse({ data: meal });
 }
 
 export async function PUT(request: Request, { params }: Params) {
@@ -33,7 +33,7 @@ export async function PUT(request: Request, { params }: Params) {
   const body = await request.json().catch(() => null);
   const validation = validateMeal(body);
   if (!validation.success) {
-    return NextResponse.json({ error: validation.errors!.join(' ') }, { status: 400 });
+    return jsonResponse({ error: validation.errors!.join(' ') }, { status: 400 });
   }
 
   const [meal] = await db
@@ -43,10 +43,10 @@ export async function PUT(request: Request, { params }: Params) {
     .returning();
 
   if (!meal) {
-    return NextResponse.json({ error: 'Ястието не е намерено.' }, { status: 404 });
+    return jsonResponse({ error: 'Ястието не е намерено.' }, { status: 404 });
   }
 
-  return NextResponse.json({ data: meal });
+  return jsonResponse({ data: meal });
 }
 
 export async function DELETE(_: Request, { params }: Params) {
@@ -60,10 +60,11 @@ export async function DELETE(_: Request, { params }: Params) {
     .returning({ id: meals.id });
 
   if (!deleted) {
-    return NextResponse.json({ error: 'Ястието не е намерено.' }, { status: 404 });
+    return jsonResponse({ error: 'Ястието не е намерено.' }, { status: 404 });
   }
 
-  return NextResponse.json({ data: { id: deleted.id } });
+  return jsonResponse({ data: { id: deleted.id } });
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

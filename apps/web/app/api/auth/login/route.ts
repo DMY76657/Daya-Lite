@@ -11,24 +11,24 @@ export async function POST(request: Request) {
   const validation = validateLogin(body);
 
   if (!validation.success) {
-    return NextResponse.json({ error: validation.errors!.join(' ') }, { status: 400 });
+    return jsonResponse({ error: validation.errors!.join(' ') }, { status: 400 });
   }
 
   const { email, password } = validation.data!;
 
   const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
   if (!user) {
-    return NextResponse.json({ error: 'Невалиден имейл или парола.' }, { status: 401 });
+    return jsonResponse({ error: 'Невалиден имейл или парола.' }, { status: 401 });
   }
 
   const match = await bcrypt.compare(password, user.passwordHash);
   if (!match) {
-    return NextResponse.json({ error: 'Невалиден имейл или парола.' }, { status: 401 });
+    return jsonResponse({ error: 'Невалиден имейл или парола.' }, { status: 401 });
   }
 
   const token = await signToken({ sub: user.id, email: user.email, role: user.role });
 
-  const response = NextResponse.json({
+  const response = jsonResponse({
     data: {
       user: { id: user.id, email: user.email, name: user.name, role: user.role },
       token,
@@ -39,3 +39,4 @@ export async function POST(request: Request) {
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

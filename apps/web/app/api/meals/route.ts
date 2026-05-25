@@ -34,7 +34,7 @@ export async function GET(request: Request) {
     .limit(pageSize)
     .offset(offset);
 
-  return NextResponse.json({
+  return jsonResponse({
     data: rows,
     pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
   });
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const validation = validateMeal(body);
   if (!validation.success) {
-    return NextResponse.json({ error: validation.errors!.join(' ') }, { status: 400 });
+    return jsonResponse({ error: validation.errors!.join(' ') }, { status: 400 });
   }
 
   const [meal] = await db
@@ -55,7 +55,8 @@ export async function POST(request: Request) {
     .values({ ...validation.data!, userId: session.sub })
     .returning();
 
-  return NextResponse.json({ data: meal }, { status: 201 });
+  return jsonResponse({ data: meal }, { status: 201 });
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

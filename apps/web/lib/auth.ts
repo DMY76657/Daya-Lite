@@ -2,6 +2,7 @@ import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { JwtPayload } from '@daya-lite/shared';
 import { COOKIE_NAME, verifyToken } from './jwt';
+import { jsonResponse } from './cors';
 
 export { signToken, verifyToken, COOKIE_NAME } from './jwt';
 
@@ -37,7 +38,7 @@ export function sessionCookie(value: string, maxAge = 60 * 60 * 24 * 7) {
 export async function requireUser(): Promise<JwtPayload | NextResponse> {
   const session = await getSession();
   if (!session) {
-    return NextResponse.json({ error: 'Не сте удостоверен.' }, { status: 401 });
+    return jsonResponse({ error: 'Не сте удостоверен.' }, { status: 401 });
   }
   return session;
 }
@@ -46,7 +47,7 @@ export async function requireAdmin(): Promise<JwtPayload | NextResponse> {
   const result = await requireUser();
   if (result instanceof NextResponse) return result;
   if (result.role !== 'admin') {
-    return NextResponse.json({ error: 'Забранен достъп.' }, { status: 403 });
+    return jsonResponse({ error: 'Забранен достъп.' }, { status: 403 });
   }
   return result;
 }

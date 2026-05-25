@@ -11,14 +11,14 @@ export async function POST(request: Request) {
   const validation = validateRegister(body);
 
   if (!validation.success) {
-    return NextResponse.json({ error: validation.errors!.join(' ') }, { status: 400 });
+    return jsonResponse({ error: validation.errors!.join(' ') }, { status: 400 });
   }
 
   const { email, password, name } = validation.data!;
 
   const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, email));
   if (existing.length > 0) {
-    return NextResponse.json({ error: 'Имейлът вече е зает.' }, { status: 409 });
+    return jsonResponse({ error: 'Имейлът вече е зает.' }, { status: 409 });
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
@@ -31,9 +31,10 @@ export async function POST(request: Request) {
   const token = await signToken({ sub: user.id, email: user.email, role: user.role });
 
   // token is included in body for mobile clients (Bearer auth); web ignores it (uses cookie)
-  const response = NextResponse.json({ data: { user, token } }, { status: 201 });
+  const response = jsonResponse({ data: { user, token } }, { status: 201 });
   response.cookies.set(sessionCookie(token));
   return response;
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

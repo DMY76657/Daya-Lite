@@ -14,7 +14,7 @@ export async function DELETE(request: Request) {
   const body = await request.json().catch(() => null);
   const validation = validateDeleteAccount(body);
   if (!validation.success) {
-    return NextResponse.json({ error: validation.errors!.join(' ') }, { status: 400 });
+    return jsonResponse({ error: validation.errors!.join(' ') }, { status: 400 });
   }
 
   const [user] = await db
@@ -24,19 +24,20 @@ export async function DELETE(request: Request) {
     .limit(1);
 
   if (!user) {
-    return NextResponse.json({ error: 'Потребителят не е намерен.' }, { status: 404 });
+    return jsonResponse({ error: 'Потребителят не е намерен.' }, { status: 404 });
   }
 
   const match = await bcrypt.compare(validation.data!.password, user.passwordHash);
   if (!match) {
-    return NextResponse.json({ error: 'Грешна парола.' }, { status: 401 });
+    return jsonResponse({ error: 'Грешна парола.' }, { status: 401 });
   }
 
   await db.delete(users).where(eq(users.id, session.sub));
 
-  const response = NextResponse.json({ data: { ok: true } });
+  const response = jsonResponse({ data: { ok: true } });
   response.cookies.set(sessionCookie('', 0));
   return response;
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

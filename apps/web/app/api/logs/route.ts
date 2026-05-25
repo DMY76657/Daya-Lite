@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const validation = validateLogCreate(body);
   if (!validation.success) {
-    return NextResponse.json({ error: validation.errors!.join(' ') }, { status: 400 });
+    return jsonResponse({ error: validation.errors!.join(' ') }, { status: 400 });
   }
 
   const { planId, mealId, scheduledTime, status } = validation.data!;
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     .limit(1);
 
   if (!plan) {
-    return NextResponse.json({ error: 'Планът не е намерен.' }, { status: 404 });
+    return jsonResponse({ error: 'Планът не е намерен.' }, { status: 404 });
   }
 
   const [meal] = await db
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     .limit(1);
 
   if (!meal) {
-    return NextResponse.json({ error: 'Ястието не е намерено.' }, { status: 404 });
+    return jsonResponse({ error: 'Ястието не е намерено.' }, { status: 404 });
   }
 
   const [log] = await db
@@ -49,7 +49,8 @@ export async function POST(request: Request) {
     })
     .returning();
 
-  return NextResponse.json({ data: log }, { status: 201 });
+  return jsonResponse({ data: log }, { status: 201 });
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

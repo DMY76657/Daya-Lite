@@ -22,7 +22,7 @@ export async function PATCH(_: Request, { params }: Params) {
     .limit(1);
 
   if (!owned) {
-    return NextResponse.json({ error: 'Записът не е намерен.' }, { status: 404 });
+    return jsonResponse({ error: 'Записът не е намерен.' }, { status: 404 });
   }
 
   const [updated] = await db
@@ -31,7 +31,8 @@ export async function PATCH(_: Request, { params }: Params) {
     .where(eq(mealLogs.id, id))
     .returning();
 
-  return NextResponse.json({ data: updated });
+  return jsonResponse({ data: updated });
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';

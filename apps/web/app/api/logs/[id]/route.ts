@@ -26,12 +26,12 @@ export async function PUT(request: Request, { params }: Params) {
   const body = await request.json().catch(() => null);
   const validation = validateLogUpdate(body);
   if (!validation.success) {
-    return NextResponse.json({ error: validation.errors!.join(' ') }, { status: 400 });
+    return jsonResponse({ error: validation.errors!.join(' ') }, { status: 400 });
   }
 
   const owned = await loadOwnedLog(id, session.sub);
   if (!owned) {
-    return NextResponse.json({ error: 'Записът не е намерен.' }, { status: 404 });
+    return jsonResponse({ error: 'Записът не е намерен.' }, { status: 404 });
   }
 
   const patch: Partial<typeof mealLogs.$inferInsert> = {};
@@ -49,7 +49,7 @@ export async function PUT(request: Request, { params }: Params) {
     .where(eq(mealLogs.id, id))
     .returning();
 
-  return NextResponse.json({ data: updated });
+  return jsonResponse({ data: updated });
 }
 
 export async function DELETE(_: Request, { params }: Params) {
@@ -59,11 +59,12 @@ export async function DELETE(_: Request, { params }: Params) {
   const { id } = await params;
   const owned = await loadOwnedLog(id, session.sub);
   if (!owned) {
-    return NextResponse.json({ error: 'Записът не е намерен.' }, { status: 404 });
+    return jsonResponse({ error: 'Записът не е намерен.' }, { status: 404 });
   }
 
   await db.delete(mealLogs).where(eq(mealLogs.id, id));
-  return NextResponse.json({ data: { id } });
+  return jsonResponse({ data: { id } });
 }
 
 export { OPTIONS } from '@/lib/cors';
+import { jsonResponse } from '@/lib/cors';
