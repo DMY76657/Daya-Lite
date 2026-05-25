@@ -9,7 +9,7 @@ A multi-platform full-stack app (Next.js + Expo + Neon Postgres) where a user ca
 | Component | URL |
 |---|---|
 | Web app (Next.js) | https://daya-lite.netlify.app |
-| Mobile app (Expo Web) | _set after Expo Web deploy_ |
+| Mobile app (Expo Web) | https://daya-lite-mobile.netlify.app |
 | API docs | https://daya-lite.netlify.app/api/docs |
 
 ## Demo credentials
