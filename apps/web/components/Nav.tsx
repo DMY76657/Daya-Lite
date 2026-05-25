@@ -22,6 +22,8 @@ export function Nav({ userName, role }: NavProps) {
   const links: Array<{ href: string; label: string }> = [
     { href: '/dashboard', label: messages.nav.dashboard },
     { href: '/meals', label: messages.nav.meals },
+    { href: '/plans', label: messages.nav.plans },
+    { href: '/stats', label: messages.nav.stats },
     { href: '/profile', label: messages.nav.profile },
   ];
   if (role === 'admin') links.push({ href: '/admin', label: messages.nav.admin });

@@ -18,6 +18,8 @@ export const messages = {
   nav: {
     dashboard: 'Днес',
     meals: 'Ястия',
+    plans: 'История',
+    stats: 'Статистика',
     profile: 'Профил',
     admin: 'Админ',
   },
