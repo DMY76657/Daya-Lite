@@ -12,6 +12,40 @@ A multi-platform full-stack app (Next.js + Expo + Neon Postgres) where a user ca
 | Mobile app (Expo Web) | https://daya-lite-mobile.netlify.app |
 | API docs | https://daya-lite.netlify.app/api/docs |
 
+## How to test as examiner
+
+Sample credentials are delivered privately alongside the capstone submission.
+Substitute them below as `<EMAIL>` / `<PASSWORD>` and `<ADMIN_EMAIL>` / `<ADMIN_PASSWORD>`.
+
+### Web (https://daya-lite.netlify.app)
+
+1. Open the landing page → click **Регистрация** to see the form (or skip; demo accounts already exist).
+2. Click **Вход**, enter the regular `<EMAIL>` / `<PASSWORD>` → lands on `/dashboard`.
+3. On **Днес**, you'll see today's plan with 5 sample meals. Click a meal to mark it eaten / skipped.
+4. Go to **Ястия** — you'll see paginated meals (10,000+ records for the seeded user). Try `Напред →` a few times. Click `+ Добави ястие` to create a new one, edit it, delete it.
+5. Go to **История** for the last 30 daily plans with eaten/total ratio.
+6. Go to **Статистика** for 7- and 30-day calorie totals + per-day bars.
+7. Go to **Профил** to see account details (Изтрий акаунт is destructive — skip unless testing).
+8. Logout via **Изход** (top-right).
+9. Login again with `<ADMIN_EMAIL>` / `<ADMIN_PASSWORD>`. A new **Админ** link appears in the nav. Visit it to see all users; you can delete any non-self account.
+
+### Mobile (https://daya-lite-mobile.netlify.app)
+
+1. Open the URL → login with the same regular user credentials.
+2. You're on **Днешен план** with the same 5 sample meals (data is shared with web).
+3. Tap **+ Добави ястие** to create a meal.
+4. Tap **Профил** (top-right) to see account info, then **Изход** to log out.
+
+### Automated smoke test
+
+A 12-check end-to-end script verifies the production API:
+
+```bash
+SMOKE_PASSWORD=<PASSWORD> npm run smoke
+```
+
+It checks login, JWT, paged meals, plans, CORS headers, auth guard (401) and authz guard (403), and `/api/docs`. Exits with non-zero on any failure — suitable for CI.
+
 ## Demo credentials
 
 Sample accounts are seeded by `npm run db:seed`. The exact credentials are

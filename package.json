@@ -14,6 +14,7 @@
     "db:push": "drizzle-kit push",
     "db:seed": "node --env-file=.env scripts/seed.mjs",
     "db:seed:bulk": "node --env-file=.env scripts/seed-bulk.mjs",
+    "smoke": "node --env-file=.env scripts/smoke.mjs",
     "build:web": "npm run build --workspace=apps/web"
   },
   "devDependencies": {
