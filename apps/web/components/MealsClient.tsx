@@ -1,9 +1,16 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Meal } from '@daya-lite/shared';
 import { messages } from '@/lib/messages';
+
+interface Pagination {
+  page: number;
+  totalPages: number;
+  total: number;
+}
 
 interface MealFormState {
   name: string;
@@ -13,7 +20,13 @@ interface MealFormState {
 
 const EMPTY: MealFormState = { name: '', description: '', calories: '' };
 
-export function MealsClient({ initialMeals }: { initialMeals: Meal[] }) {
+export function MealsClient({
+  initialMeals,
+  pagination,
+}: {
+  initialMeals: Meal[];
+  pagination: Pagination;
+}) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -207,6 +220,32 @@ export function MealsClient({ initialMeals }: { initialMeals: Meal[] }) {
             </li>
           ))}
         </ul>
+      )}
+
+      {pagination.totalPages > 1 && (
+        <div className="flex items-center justify-between text-sm">
+          <p className="text-slate-600">
+            Страница {pagination.page} от {pagination.totalPages} ({pagination.total} общо)
+          </p>
+          <div className="flex gap-2">
+            {pagination.page > 1 && (
+              <Link
+                href={`/meals?page=${pagination.page - 1}`}
+                className="rounded-lg border border-slate-300 px-3 py-1 hover:bg-slate-100"
+              >
+                ← Назад
+              </Link>
+            )}
+            {pagination.page < pagination.totalPages && (
+              <Link
+                href={`/meals?page=${pagination.page + 1}`}
+                className="rounded-lg border border-slate-300 px-3 py-1 hover:bg-slate-100"
+              >
+                Напред →
+              </Link>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

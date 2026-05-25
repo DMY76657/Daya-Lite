@@ -22,8 +22,8 @@ build/
 .env.local
 .env.production
 
-# Drizzle
-packages/shared/src/db/migrations/*.sql
+# Drizzle: SQL migrations ARE committed (capstone requirement).
+# Nothing to ignore here intentionally.
 
 # Logs
 *.log

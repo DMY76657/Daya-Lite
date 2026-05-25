@@ -13,6 +13,7 @@
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
     "db:seed": "node --env-file=.env scripts/seed.mjs",
+    "db:seed:bulk": "node --env-file=.env scripts/seed-bulk.mjs",
     "build:web": "npm run build --workspace=apps/web"
   },
   "devDependencies": {
