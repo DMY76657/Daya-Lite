@@ -37,9 +37,18 @@ async function upsertUser(email, name, role) {
 }
 
 async function clearUserData(userId) {
-  // CASCADE will cleanup meal_logs and daily_plans
-  await sql`DELETE FROM meals WHERE user_id = ${userId}`;
-  await sql`DELETE FROM daily_plans WHERE user_id = ${userId}`;
+  // Only wipe the 5 sample meals from previous seed runs (matched by name)
+  // and today's plan. This preserves any bulk-seeded data from
+  // `npm run db:seed:bulk`, which inserts meals with auto-numbered names
+  // like "Овесена каша #1234" — those won't match these exact names.
+  await sql`
+    DELETE FROM meals
+    WHERE user_id = ${userId}
+      AND name IN ('Овесена каша', 'Гръцка салата', 'Пилешко с ориз', 'Кисело мляко с плодове', 'Чай с лимон')
+  `;
+  const today = new Date().toISOString().slice(0, 10);
+  // CASCADE will cleanup meal_logs for this plan
+  await sql`DELETE FROM daily_plans WHERE user_id = ${userId} AND plan_date = ${today}`;
 }
 
 async function seedMealsAndPlan(userId) {
