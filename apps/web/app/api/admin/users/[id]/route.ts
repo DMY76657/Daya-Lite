@@ -54,3 +54,5 @@ export async function DELETE(_: Request, { params }: Params) {
 
   return NextResponse.json({ data: { id: deleted.id } });
 }
+
+export { OPTIONS } from '@/lib/cors';

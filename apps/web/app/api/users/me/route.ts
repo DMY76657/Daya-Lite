@@ -38,3 +38,5 @@ export async function DELETE(request: Request) {
   response.cookies.set(sessionCookie('', 0));
   return response;
 }
+
+export { OPTIONS } from '@/lib/cors';

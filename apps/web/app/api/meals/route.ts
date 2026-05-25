@@ -35,3 +35,5 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ data: meal }, { status: 201 });
 }
+
+export { OPTIONS } from '@/lib/cors';

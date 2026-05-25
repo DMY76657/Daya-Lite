@@ -37,3 +37,5 @@ export async function POST(request: Request) {
   response.cookies.set(sessionCookie(token));
   return response;
 }
+
+export { OPTIONS } from '@/lib/cors';

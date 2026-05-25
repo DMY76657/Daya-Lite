@@ -65,3 +65,5 @@ export async function DELETE(_: Request, { params }: Params) {
   await db.delete(mealLogs).where(eq(mealLogs.id, id));
   return NextResponse.json({ data: { id } });
 }
+
+export { OPTIONS } from '@/lib/cors';

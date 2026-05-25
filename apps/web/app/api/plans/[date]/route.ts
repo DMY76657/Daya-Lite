@@ -65,3 +65,5 @@ export async function PUT(request: Request, { params }: Params) {
 
   return NextResponse.json({ data: updated });
 }
+
+export { OPTIONS } from '@/lib/cors';

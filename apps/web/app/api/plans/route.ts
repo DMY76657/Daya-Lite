@@ -50,3 +50,5 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ data: plan }, { status: 201 });
 }
+
+export { OPTIONS } from '@/lib/cors';

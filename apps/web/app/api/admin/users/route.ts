@@ -21,3 +21,5 @@ export async function GET() {
 
   return NextResponse.json({ data: rows });
 }
+
+export { OPTIONS } from '@/lib/cors';
