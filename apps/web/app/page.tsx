@@ -230,6 +230,86 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* SHOWCASE */}
+      <section
+        className="bg-white px-4 py-24"
+        aria-labelledby="showcase-heading"
+      >
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center">
+            <span className="text-sm font-semibold uppercase tracking-wider text-emerald-700">
+              Виж как работи
+            </span>
+            <h2
+              id="showcase-heading"
+              className="mt-3 text-4xl font-semibold tracking-tight text-slate-900"
+            >
+              Прост интерфейс. <span className="text-slate-400">Бърза работа.</span>
+            </h2>
+          </div>
+
+          {/* Hero screenshot — dashboard */}
+          <div className="mt-12 overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-100 to-slate-50 p-3 shadow-2xl shadow-emerald-500/10">
+            <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
+              <div
+                className="flex items-center gap-1.5 border-b border-slate-200 bg-slate-50 px-4 py-2.5"
+                aria-hidden="true"
+              >
+                <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+                <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                <span className="ml-3 text-xs text-slate-500">
+                  daya-lite.netlify.app/dashboard
+                </span>
+              </div>
+              <img
+                src="/screenshots/dashboard.png"
+                alt="Днешен план с маркирани изядени ястия и калории"
+                className="block w-full"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* Three supporting screenshots */}
+          <div className="mt-6 grid gap-6 sm:grid-cols-3">
+            <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <img
+                src="/screenshots/meals.png"
+                alt="Каталог с ястия и paging контроли"
+                className="block w-full"
+                loading="lazy"
+              />
+              <figcaption className="border-t border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700">
+                Каталог с paging (10 000+ записа)
+              </figcaption>
+            </figure>
+            <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <img
+                src="/screenshots/stats.png"
+                alt="Статистика на калории по дни"
+                className="block w-full"
+                loading="lazy"
+              />
+              <figcaption className="border-t border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700">
+                Статистика по дни
+              </figcaption>
+            </figure>
+            <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <img
+                src="/screenshots/mobile.png"
+                alt="Мобилно приложение — днешен план"
+                className="block w-full"
+                loading="lazy"
+              />
+              <figcaption className="border-t border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700">
+                Мобилно приложение
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
       {/* CROSS-PLATFORM SHOWCASE */}
       <section
         className="relative overflow-hidden bg-slate-950 px-4 py-24 text-white"

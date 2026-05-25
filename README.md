@@ -12,6 +12,13 @@ A multi-platform full-stack app (Next.js + Expo + Neon Postgres) where a user ca
 | Mobile app (Expo Web) | https://daya-lite-mobile.netlify.app |
 | API docs | https://daya-lite.netlify.app/api/docs |
 
+## Screenshots
+
+| | |
+|---|---|
+| **Днешен план** (web)<br><img src="apps/web/public/screenshots/dashboard.png" alt="Daya Lite dashboard" width="100%"> | **Ястия с paging** (web)<br><img src="apps/web/public/screenshots/meals.png" alt="Meals catalog with pagination" width="100%"> |
+| **Статистика** (web)<br><img src="apps/web/public/screenshots/stats.png" alt="Calorie stats per day" width="100%"> | **Мобилно приложение**<br><img src="apps/web/public/screenshots/mobile.png" alt="Mobile Today screen" width="100%"> |
+
 ## How to test as examiner
 
 Sample credentials are delivered privately alongside the capstone submission.
