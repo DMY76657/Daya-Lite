@@ -68,7 +68,7 @@ const stats = [
   { value: '10', label: 'Web екрана' },
   { value: '5', label: 'Mobile екрана' },
   { value: '14', label: 'API endpoint-а' },
-  { value: '10K+', label: 'Записа в DB' },
+  { value: 'BG', label: 'Български UI' },
 ];
 
 export default function HomePage() {
@@ -281,7 +281,7 @@ export default function HomePage() {
                 loading="lazy"
               />
               <figcaption className="border-t border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700">
-                Каталог с paging (10 000+ записа)
+                Каталог със сървърен paging
               </figcaption>
             </figure>
             <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -356,7 +356,7 @@ export default function HomePage() {
               </div>
               <h3 className="mt-6 text-xl font-semibold">Web приложение</h3>
               <p className="mt-1.5 text-sm text-slate-400">
-                10 екрана, paging за 10 000+ записа, админ панел, статистика.
+                10 екрана, сървърен paging, админ панел, статистика.
               </p>
             </Link>
             <a

@@ -29,7 +29,7 @@ Substitute them below as `<EMAIL>` / `<PASSWORD>` and `<ADMIN_EMAIL>` / `<ADMIN_
 1. Open the landing page → click **Регистрация** to see the form (or skip; demo accounts already exist).
 2. Click **Вход**, enter the regular `<EMAIL>` / `<PASSWORD>` → lands on `/dashboard`.
 3. On **Днес**, you'll see today's plan with 5 sample meals. Click a meal to mark it eaten / skipped.
-4. Go to **Ястия** — you'll see paginated meals (10,000+ records for the seeded user). Try `Напред →` a few times. Click `+ Добави ястие` to create a new one, edit it, delete it.
+4. Go to **Ястия** — paginated meal catalog. New accounts start with 8 starter meals; the regular demo account has more for paging review. Click `+ Добави ястие` to create a new one, edit it, delete it. Use `Напред →` / `← Назад` if there are multiple pages.
 5. Go to **История** for the last 30 daily plans with eaten/total ratio.
 6. Go to **Статистика** for 7- and 30-day calorie totals + per-day bars.
 7. Go to **Профил** to see account details (Изтрий акаунт is destructive — skip unless testing).
@@ -146,7 +146,7 @@ SQL migration: [`packages/shared/src/db/migrations/0000_dizzy_mockingbird.sql`](
 - `/meals` paginates server-side (20/page), with `Страница X от Y` indicator and prev/next links.
 - `GET /api/meals?page=N&pageSize=M` returns `{ data, pagination: { page, pageSize, total, totalPages } }`.
 - Btree index on `meals.user_id` speeds up the per-user filter.
-- `scripts/seed-bulk.mjs` inserts **10,000 meals** for the demo user (batched 500/row), so paging can be validated against realistic load: `npm run db:seed:bulk`.
+- `scripts/seed-bulk.mjs` is an optional script that bulk-inserts a large dataset for the demo user (batched 500/row) so paging behaviour can be validated against realistic load: `npm run db:seed:bulk`.
 
 ## Auth & authorization
 
@@ -199,7 +199,7 @@ EXPO_PUBLIC_API_BASE_URL=https://daya-lite.netlify.app/api
 ```bash
 npm run db:push          # sync schema with Neon
 npm run db:seed          # 2 demo users + sample meals
-npm run db:seed:bulk     # 10k meals on the seeded regular user (scalability test)
+npm run db:seed:bulk     # optional: bulk-insert for paging/scalability tests
 npm run db:studio        # browse data
 ```
 
@@ -229,7 +229,7 @@ packages/
     src/db/migrations/   Committed SQL migrations
 scripts/
   seed.mjs               Demo user + sample data
-  seed-bulk.mjs          10k meals for scalability test
+  seed-bulk.mjs          Optional bulk-insert for paging/scalability tests
 AGENTS.md                AI dev agent instructions
 drizzle.config.ts        Drizzle Kit config
 netlify.toml             Web app deploy config
