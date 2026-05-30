@@ -36,19 +36,44 @@ async function upsertUser(email, name, role) {
   return user;
 }
 
+// Starter catalog — kept in sync with apps/web/app/api/auth/register/route.ts
+const STARTER_MEALS = [
+  { name: 'Овесена каша', description: 'С банан и мед', calories: 320 },
+  { name: 'Бъркани яйца', description: 'С пресни подправки', calories: 240 },
+  { name: 'Гръцка салата', description: 'С фета и маслини', calories: 280 },
+  { name: 'Пилешко с ориз', description: 'Гриловано пилешко филе', calories: 520 },
+  { name: 'Леща с ориз', description: 'Класическа постна супа', calories: 380 },
+  { name: 'Кисело мляко с плодове', description: null, calories: 180 },
+  { name: 'Тиквена супа', description: 'С джинджифил', calories: 210 },
+  { name: 'Чай с лимон', description: null, calories: 5 },
+];
+
 async function clearUserData(userId) {
-  // Only wipe the 5 sample meals from previous seed runs (matched by name)
-  // and today's plan. This preserves any bulk-seeded data from
-  // `npm run db:seed:bulk`, which inserts meals with auto-numbered names
-  // like "Овесена каша #1234" — those won't match these exact names.
+  // Wipe meals matching either the legacy 5-name set or the current 8-name
+  // starter catalog. Preserves bulk-seeded data from `npm run db:seed:bulk`,
+  // which uses auto-numbered names like "Овесена каша #1234".
+  const names = Array.from(new Set([
+    'Овесена каша', 'Гръцка салата', 'Пилешко с ориз', 'Кисело мляко с плодове', 'Чай с лимон',
+    ...STARTER_MEALS.map((m) => m.name),
+  ]));
   await sql`
     DELETE FROM meals
     WHERE user_id = ${userId}
-      AND name IN ('Овесена каша', 'Гръцка салата', 'Пилешко с ориз', 'Кисело мляко с плодове', 'Чай с лимон')
+      AND name = ANY(${names})
   `;
   const today = new Date().toISOString().slice(0, 10);
   // CASCADE will cleanup meal_logs for this plan
   await sql`DELETE FROM daily_plans WHERE user_id = ${userId} AND plan_date = ${today}`;
+}
+
+async function seedStarterMeals(userId) {
+  for (const m of STARTER_MEALS) {
+    await sql`
+      INSERT INTO meals (name, description, calories, user_id)
+      VALUES (${m.name}, ${m.description}, ${m.calories}, ${userId})
+    `;
+  }
+  return STARTER_MEALS.length;
 }
 
 async function seedMealsAndPlan(userId) {
@@ -106,7 +131,9 @@ async function main() {
 
   const admin = await upsertUser(ADMIN_EMAIL, 'Администратор', 'admin');
   await clearUserData(admin.id);
+  const adminMealCount = await seedStarterMeals(admin.id);
   console.log(`Admin:  ${admin.email}  (password: ${PASSWORD})`);
+  console.log(`        + ${adminMealCount} starter meals`);
 
   const user = await upsertUser(USER_EMAIL, 'Демо потребител', 'user');
   await clearUserData(user.id);

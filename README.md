@@ -1,5 +1,7 @@
 # Daya Lite
 
+> **Малката версия на по-голям проект.** Daya Lite е capstone MVP-то на [mydaya.app](https://mydaya.app) — изграден в смален обем, за да покрие изискванията на курса. Production версията продължава да се развива отделно.
+
 Personal daily meal planner — capstone project for SoftUni's **"Full-Stack Apps with AI"** course (March 2026 cohort). Submission deadline: **2026-05-27**.
 
 A multi-platform full-stack app (Next.js + Expo + Neon Postgres) where a user can keep a personal meal catalog, plan meals per day, mark them eaten/skipped, and track calorie intake.
